@@ -170,3 +170,4 @@ display.addEventListener('keyup', function(event) {
 });
 
 //Comment added in github
+//Checking stage changes
