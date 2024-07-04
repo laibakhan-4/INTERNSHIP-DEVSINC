@@ -2,10 +2,8 @@ let display= document.getElementById('display');
 let historyList= document.getElementById('history-list');
 
 function evaluateExpression(expression) {
-    // Trim whitespaces
-    expression = expression.trim();
-    
-    // Check for supported constants
+
+    expression = expression.trim();    
     expression = expression.replace(/pi/g, '3.1415');
     expression = expression.replace(/e/g, '2.7182');
     
@@ -14,11 +12,11 @@ function evaluateExpression(expression) {
 }
 
 function evaluateSubExpression(expression) {
-    // Find the index of the first operator with the lowest precedence
     let minPrecedenceIndex = -1;
     let minPrecedence = Infinity;
     let parenCount = 0;
     
+    // Find the index of the first operator with the lowest precedence
     for (let i = 0; i < expression.length; i++) {
         if (expression[i] === '(') {
             parenCount++;
@@ -50,9 +48,7 @@ function evaluateSubExpression(expression) {
         // Recursively evaluate the left and right sub-expressions
         const operator = expression[minPrecedenceIndex];
         const left = evaluateSubExpression(expression.slice(0, minPrecedenceIndex));
-        const right = evaluateSubExpression(expression.slice(minPrecedenceIndex + 1));
-
-  
+        const right = evaluateSubExpression(expression.slice(minPrecedenceIndex + 1));  
         
     // Apply the operator to the left and right sub-expressions
     switch (operator) {
@@ -75,7 +71,6 @@ function evaluateSubExpression(expression) {
             throw new Error('Invalid operator');
     }
 }
-
 
 function findMatchingParenIndex(expression, startIndex) {
     let parenCount = 1;
@@ -107,9 +102,6 @@ function getOperatorPrecedence(operator) {
     }
 }
 
-
-
-
 function appendToDisplay(input){
     display.value += input;
 }
@@ -134,11 +126,13 @@ function calculate(){
         updateDisplay(display.value,'Error');
     }   
 }
+
 function addToHistory(entry){
     let li=document.createElement('li');
     li.innerHTML=`<div class="entry">${entry}</div> <button class="delete-btn" onclick="deleteHistoryEntry(this)">Delete</button>`;
     historyList.prepend(li);
 }
+
 function deleteHistoryEntry(button){
     let li= button.parentElement;
     historyList.removeChild(li);
@@ -149,6 +143,7 @@ function deleteHistoryEntry(button){
       successMessage.remove();
     }, 1000);
 }
+
 function clearAllHistory(){
     historyList.innerHTML="";
     const successMessage = document.createElement('div');
@@ -164,13 +159,9 @@ function updateDisplay(input, result) {
   document.getElementById('result').textContent = result;
 }
 
-  
-
 display.addEventListener('input', function() {
     updateDisplay(this.value);
 });
-
-
   
 display.addEventListener('keyup', function(event) {
     if (event.key === 'Enter') {
